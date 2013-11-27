@@ -1,0 +1,170 @@
+package gcj;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Rotate {
+
+	private static int n,k, top;
+	private static String[] values;
+	private static char[][] rotate,gravity;
+	private static boolean b,r;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		BufferedReader fin = null;
+		int t = 0;
+		StringTokenizer str = null;
+		
+		try {
+			fin = new BufferedReader(new FileReader(new File("A.txt")));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+			
+			
+			try {
+				t = Integer.parseInt(fin.readLine());
+				//System.out.println(t);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			for(int i=0;i<t;i++){
+				System.out.println("Case #"+(i+1)+": ");
+				try {
+					
+					str=new StringTokenizer(fin.readLine());
+					
+					n = Integer.parseInt(str.nextToken());
+					k = Integer.parseInt(str.nextToken());
+					values = new String[n+1];
+					rotate = new char[n][n];
+					gravity = new char[n][n];
+					top =0;
+					b=false;
+					r=false;
+					int ctr;
+					for(int j=0;j<n;j++){
+						top=0;
+						String s=fin.readLine();
+						String r = new String("");
+						String g = new String("");
+						Arrays.fill(rotate[j],'0');
+						Arrays.fill(gravity[j],'0');
+						r = s.replaceAll("\\.","");
+						ctr=r.length();
+						for(int p=0;p<n-ctr;p++){
+							g=""+"."+r;
+							r= new String("");
+							r+=g;
+						}
+					values[j]=g;
+					}
+					
+				}
+					
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				rotate();
+				for(int p=0;p<n;p++){
+					for(int j=0;j<n;j++){
+						System.out.print(rotate[p][j]);
+					}
+
+					System.out.println("");
+				}
+				check();
+				System.out.println(r);
+				System.out.println(b);
+			}
+	}
+			
+	
+
+	private static void check() {
+		// TODO Auto-generated method stub
+		int ctr,pi,pj;
+		for(int i=0;i<n;i++){
+			
+			for(int j=0;j<n;j++){
+				pi=i;
+				pj=j;
+				ctr=0;
+				if(rotate[pi][pj]=='B'||rotate[pi][pj]=='R'){
+		
+				while((pi==2&&rotate[pi][pi]==rotate[ctr+i+1][j]){
+					ctr++;
+					if(ctr==k-1)
+						break;
+				}
+				if(ctr==k-1&&rotate[pi][pj]=='B')
+					b=true;
+				else
+					r=true;
+				
+				ctr=0;
+				while((ctr+i+1)<n&&rotate[pi][pi]==rotate[i][j+ctr+1]&&(ctr+i+1)<n){
+					ctr++;
+					if(ctr==k-1)
+						break;
+				}
+				if(ctr==k-1&&rotate[pi][pj]=='B')
+					b=true;
+				else
+					r=true;
+				ctr=0;
+				while((ctr+i+1)<n&&rotate[pi][pi]==rotate[i+ctr+1][j+ctr+1]&&(ctr+i+1)<n){
+					ctr++;
+					if(ctr==k-1)
+						break;
+				}
+				if(ctr==k-1&&rotate[pi][pj]=='B')
+					b=true;
+				else
+					r=true;
+				ctr=0;
+				while((ctr-i-1)>=0&&rotate[pi][pi]==rotate[i-ctr-1][j-ctr+-1]&&(ctr-i-1)>=0){
+					ctr++;
+					if(ctr==k-1)
+						break;
+				}
+				if(ctr==k-1&&rotate[pi][pj]=='B')
+					b=true;
+				else
+					r=true;
+				
+					
+				}
+					
+			}
+		}
+	}
+
+
+
+	private static void rotate() {
+		
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n;j++){
+				rotate[j][n-1-i] = values[i].charAt(j);
+			}
+		}
+	}
+}
+
+

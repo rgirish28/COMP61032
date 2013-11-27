@@ -1,0 +1,125 @@
+package gcj;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Rotate {
+
+	private static int n,k, top;
+	private static String[] values;
+	private static char[][] rotate,gravity;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		BufferedReader fin = null;
+		int t = 0;
+		StringTokenizer str = null;
+		
+		try {
+			fin = new BufferedReader(new FileReader(new File("A.txt")));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+			
+			
+			try {
+				t = Integer.parseInt(fin.readLine());
+				//System.out.println(t);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			for(int i=0;i<t;i++){
+				System.out.println("Case #"+(i+1)+": ");
+				try {
+					
+					str=new StringTokenizer(fin.readLine());
+					
+					n = Integer.parseInt(str.nextToken());
+					k = Integer.parseInt(str.nextToken());
+					values = new String[n+1];
+					rotate = new char[n][n];
+					gravity = new char[n][n];
+					top =0;
+					int ctr;
+					for(int j=0;j<n;j++){
+						ctr=0;
+						top=0;
+						String s=fin.readLine();
+						String r = new String("");
+						String g = new String("");
+						Arrays.fill(rotate[j],'0');
+						Arrays.fill(gravity[j],'0');
+						if(s.lastIndexOf('B')>s.lastIndexOf('R'))
+							top=s.lastIndexOf('B');
+						else 
+							top=s.lastIndexOf('R');		
+						if(top==-1)
+							top=n;
+					r+=s.substring(0, top+1);
+						for(int p=0;p<n-top;p++)
+							g+="."+r;
+					System.out.println(g);
+					}
+					
+				}
+					
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				rotate();
+				gravity();
+				for(int p=0;p<n;p++){
+					for(int j=0;j<n;j++){
+						System.out.print(gravity[p][j]);
+					}
+					System.out.println("");
+				}
+			}
+	}
+			
+	
+
+	private static void gravity() {
+		
+		int ctr;
+	for(int j=n-1;j>0;j--){
+		ctr=0;
+		for(int i=0;i<n;i++){
+			while(rotate[j][i]=='.'){
+				gravity[j][i]=rotate[j-1][i];
+				rotate[j-1][i]='.';
+			
+			}
+			gravity[j][i]=rotate[j][i];
+		}
+		if(ctr==1&&top!=0)
+			top--;
+	}
+		
+	}
+
+	private static void rotate() {
+		
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n;j++){
+				rotate[j][n-1-i] = values[i].charAt(j);
+			}
+		}
+	}
+}
+
+

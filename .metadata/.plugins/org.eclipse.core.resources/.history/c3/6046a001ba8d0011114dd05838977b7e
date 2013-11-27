@@ -1,0 +1,106 @@
+package gcj;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Rotate {
+
+	private static int n,k, top;
+	private static String[] values;
+	private static char[][] rotate,gravity;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		BufferedReader fin = null;
+		int t = 0;
+		StringTokenizer str = null;
+		
+		try {
+			fin = new BufferedReader(new FileReader(new File("A.txt")));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+			
+			
+			try {
+				t = Integer.parseInt(fin.readLine());
+				//System.out.println(t);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			for(int i=0;i<t;i++){
+				System.out.println("Case #"+(i+1)+": ");
+				try {
+					
+					str=new StringTokenizer(fin.readLine());
+					int ctr =0;
+					
+					n = Integer.parseInt(str.nextToken());
+					k = Integer.parseInt(str.nextToken());
+					values = new String[n+1];
+					rotate = new char[n][n];
+					gravity = new char[n][n];
+					for(int j=0;j<n;j++){
+						values[j]=fin.readLine();
+						Arrays.fill(rotate[j],'0');
+						String s = 	values[j].replaceAll("R","");
+						String r = 	values[j].replaceAll("B","");
+						if((values[j].length()-s.length()!=0||values[j].length()-r.length()!=0)&&ctr==0){
+							ctr=1;
+							top=j;
+						}
+							
+					}
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				rotate();
+				gravity();
+				for(int p=0;p<n;p++){
+					for(int j=0;j<n;j++){
+						System.out.print(gravity[p][j]);
+					}
+					System.out.println("");
+				}
+			}
+			
+	}
+
+	private static void gravity() {
+		
+	for(int j=n-1;j>0;j--){
+		for(int i=0;i<n;i++){
+			if(rotate[j][i]=='.'){
+				gravity[j][i]=rotate[j-1][i];
+			}
+		}
+	}
+		
+	}
+
+	private static void rotate() {
+		
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n;j++){
+				rotate[j][n-1-i] = values[i].charAt(j);
+			}
+		}
+	}
+}
+
+
